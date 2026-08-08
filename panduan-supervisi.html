@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Kegiatan Supervisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3E6F; --navy-deep: #122A4D; --gold: #E8A020; --gold-soft: #F3C468;
+    --paper: #FAF7F1; --paper-card: #FFFFFF; --ink: #22262E; --ink-soft: #5B6270;
+    --line: #E4DFD3; --green: #2E7D5B; --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Public Sans', sans-serif; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: 'Fraunces', serif; }
+
+  header { background: var(--navy); background-image: radial-gradient(circle at 85% -20%, rgba(232,160,32,0.18), transparent 55%); color: white; padding: 36px 24px 28px; }
+  .header-inner { max-width: 760px; margin: 0 auto; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-soft); font-weight: 600; margin-bottom: 8px; }
+  header h1 { font-size: clamp(22px, 3.2vw, 30px); font-weight: 600; margin: 0 0 6px; }
+  header p { margin: 0; color: rgba(255,255,255,0.75); font-size: 14px; max-width: 560px; }
+  .goldline { width: 60px; height: 3px; background: var(--gold); border-radius: 3px; margin: 16px 0; }
+
+  main { max-width: 760px; margin: 0 auto; padding: 32px 24px 70px; }
+
+  .card { background: var(--paper-card); border-radius: var(--radius); border: 1px solid var(--line); padding: 26px 28px; margin-bottom: 20px; }
+  .card h2 { font-size: 19px; font-weight: 600; margin: 0 0 6px; color: var(--navy-deep); }
+  .card .sub { color: var(--ink-soft); font-size: 13.5px; margin: 0 0 18px; }
+
+  .step { display: flex; gap: 16px; margin-bottom: 18px; }
+  .step:last-child { margin-bottom: 0; }
+  .step-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: #E4EEFB; color: var(--navy);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; font-family: 'Fraunces', serif;
+  }
+  .step-body h3 { font-size: 14.5px; font-weight: 600; margin: 3px 0 4px; }
+  .step-body p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+
+  .tip-box {
+    background: #F3EEE3; border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0;
+    padding: 12px 16px; font-size: 13px; color: var(--ink); line-height: 1.6; margin-top: 16px;
+  }
+  .tip-box strong { color: var(--navy-deep); }
+
+  .status-demo { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .status-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
+  .status-pill.saving { background: #FBEBD8; color: #A5651A; }
+  .status-pill.saved { background: #E9F3EC; color: var(--green); }
+  .status-pill.error { background: #FBE9E6; color: #B84C3E; }
+
+  .back-link { display: inline-block; margin-bottom: 20px; color: var(--navy); font-size: 13px; text-decoration: none; font-weight: 600; }
+  .back-link:hover { text-decoration: underline; }
+
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" style="color:rgba(255,255,255,0.6);font-size:12.5px;text-decoration:none;">Kembali ke Menu Utama</a>
+    <div class="eyebrow" style="margin-top:14px;">Direktorat SMA, Kemendikdasmen. Kegiatan Supervisi 10 sampai 15 Agustus 2026</div>
+    <h1>Panduan Kegiatan Supervisi</h1>
+    <div class="goldline"></div>
+    <p>Petunjuk lengkap buat petugas yang bertugas mengisi instrumen di lapangan.</p>
+  </div>
+</header>
+
+<main>
+
+  <div class="card">
+    <h2>1. Dapatkan link pribadi</h2>
+    <p class="sub">Setiap petugas mengisi lewat link yang sudah otomatis terisi data lokusnya.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Buka dashboard kegiatan</h3>
+        <p>Koordinator akan membagikan link dashboard kegiatan supervisi. Buka lewat browser di HP atau laptop, tidak perlu install aplikasi apa pun.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Cari lokus tempat bertugas</h3>
+        <p>Di tab Link Pengisian, cari nama kabupaten atau kota tempat bertugas. Setiap lokus muncul sebagai satu kartu, isinya semua link instrumen yang perlu diisi di lokus itu.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Klik "Buka" pada instrumen yang sesuai</h3>
+        <p>Kalau bertugas di lokus Observasi, isinya link Kuesioner Satuan Pendidikan untuk dua sekolah. Kalau bertugas di lokus FGD, isinya link Notulensi FGD, Wawancara Fasda, dan Wawancara Fasnas.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2. Mengisi Kuesioner Satuan Pendidikan</h2>
+    <p class="sub">Diisi lewat wawancara ke pihak sekolah, bukan diisi sendiri oleh sekolah.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Isi identitas dulu</h3>
+        <p>Halaman pertama yang muncul adalah Identitas. Nama sekolah, NPSN, kabupaten atau kota, dan provinsi sudah otomatis terisi. Yang perlu diisi manual cuma nama petugas, tanggal, nama responden, dan jabatan responden.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Pilih pertanyaan lewat panel kiri</h3>
+        <p>Semua pertanyaan tersusun di panel sebelah kiri, dikelompokkan per bagian. Klik nomor pertanyaan mana pun, tidak harus berurutan. Titik kecil di sebelah nomor menandakan sudah terisi atau belum.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Centang jawaban yang sesuai</h3>
+        <p>Boleh centang lebih dari satu kalau memang begitu jawabannya. Untuk pertanyaan soal alokasi anggaran, ada kolom angka persen yang perlu diisi manual, bukan checkbox.</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>Catatan:</strong> ada tiga pertanyaan bertanda "2025" di bagian bawah. Itu cuma perlu diisi kalau sekolahnya juga penerima BOS Kinerja Terbaik tahun 2025. Kalau bukan, lewati saja, tidak apa apa dibiarkan kosong.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3. Mengisi Wawancara Fasda atau Fasnas</h2>
+    <p class="sub">Dilakukan terpisah dari notulensi kelompok FGD, biasanya oleh petugas yang berbeda di waktu yang sama.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Pastikan link yang dibuka benar</h3>
+        <p>Ada dua link berbeda, satu untuk Fasda dan satu untuk Fasnas. Judul di bagian atas halaman menunjukkan mana yang sedang dibuka.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Isi seperti biasa lewat panel kiri</h3>
+        <p>Caranya sama seperti Kuesioner Satuan Pendidikan. Klik nomor pertanyaan, centang jawaban, pindah ke pertanyaan lain kapan saja.</p>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>Kalau Fasda atau Fasnas tidak hadir</strong> di sesi itu, tidak apa apa. Cukup dibiarkan kosong, tidak perlu dipaksakan diisi.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>4. Mengisi Notulensi FGD</h2>
+    <p class="sub">Ini beda dari yang lain karena jawabannya bebas menulis, bukan checkbox, dan diisi satu orang mewakili hasil diskusi kelompok.</p>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Tidak perlu berurutan</h3>
+        <p>Diskusi FGD biasanya lompat dari satu topik ke topik lain. Halaman ini memang dirancang begitu, klik topik apa pun yang sedang dibahas, tidak perlu isi dari atas ke bawah.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Ketik catatan sambil mendengarkan</h3>
+        <p>Ada kotak catatan besar di setiap topik. Ketik poin poin penting dari diskusi, tidak perlu kata demi kata, cukup intinya.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>5. Soal penyimpanan otomatis</h2>
+    <p class="sub">Semua jawaban tersimpan sendiri saat diisi, tidak ada tombol "Kirim" atau "Submit" di akhir.</p>
+    <p style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;">Perhatikan tulisan kecil di pojok kanan atas halaman. Itu status penyimpanan, berubah otomatis setiap kali ada jawaban baru diketik atau dicentang.</p>
+    <div class="status-demo">
+      <span class="status-pill saving">Menyimpan...</span>
+      <span class="status-pill saved">Tersimpan</span>
+      <span class="status-pill error">Gagal menyimpan, coba lagi</span>
+    </div>
+    <div class="tip-box">
+      Kalau muncul tulisan <strong>Gagal menyimpan</strong>, biasanya karena koneksi internet sedang bermasalah. Coba ketik ulang jawaban yang sama, atau tunggu sebentar sampai koneksi kembali normal. Jawaban yang sudah pernah tersimpan tidak akan hilang, cuma jawaban terakhir yang mungkin perlu diketik ulang.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>6. Kalau ada kendala</h2>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Halaman tidak mau terbuka</h3>
+        <p>Pastikan link yang dibuka lengkap, tidak terpotong. Coba disalin ulang dari sumbernya, jangan diketik manual.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Muncul pesan "Link tidak lengkap"</h3>
+        <p>Berarti ada bagian dari link yang hilang. Minta link yang baru dari koordinator atau dashboard Link Pengisian, jangan ketik ulang sendiri.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Kendala lain</h3>
+        <p>Hubungi Tim Data. Kalau bisa, sertakan screenshot halamannya supaya lebih cepat dibantu.</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>Direktorat SMA, Kemendikdasmen. Supervisi BOSP Kinerja Terbaik 2026</footer>
+
+</body>
+</html>
