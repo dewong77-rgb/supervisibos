@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengisian Mandiri Nasional — BOSP Kinerja Terbaik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3E6F; --navy-deep: #122A4D; --gold: #E8A020; --gold-soft: #F3C468;
+    --paper: #FAF7F1; --paper-card: #FFFFFF; --ink: #22262E; --ink-soft: #5B6270;
+    --line: #E4DFD3; --green: #2E7D5B; --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Public Sans', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  h1, h2, .brand { font-family: 'Fraunces', serif; }
+
+  header { background: var(--navy); background-image: radial-gradient(circle at 85% -20%, rgba(232,160,32,0.18), transparent 55%); color: white; padding: 40px 24px 32px; text-align: center; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-soft); font-weight: 600; margin-bottom: 10px; }
+  header h1 { font-size: clamp(24px, 4vw, 32px); font-weight: 600; margin: 0 auto 8px; max-width: 640px; }
+  header p { margin: 0 auto; color: rgba(255,255,255,0.75); font-size: 14px; max-width: 480px; }
+  .goldline { width: 64px; height: 3px; background: var(--gold); border-radius: 3px; margin: 16px auto; }
+
+  main { max-width: 560px; margin: -20px auto 60px; padding: 0 20px; }
+
+  .card { background: var(--paper-card); border-radius: var(--radius); border: 1px solid var(--line); padding: 28px 26px; box-shadow: 0 8px 24px rgba(18,42,77,0.08); }
+
+  .role-toggle { display: flex; gap: 8px; margin-bottom: 24px; }
+  .role-btn {
+    flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper);
+    font-family: 'Public Sans', sans-serif; font-weight: 600; font-size: 13.5px; color: var(--ink-soft); cursor: pointer;
+    text-align: center; transition: all 0.15s ease;
+  }
+  .role-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; }
+  .field select, .field input {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 10px;
+    font-family: 'Public Sans', sans-serif; font-size: 14px; background: var(--paper-card); color: var(--ink);
+  }
+  .field select:disabled { background: #F3EEE3; color: var(--ink-soft); }
+  .field select:focus, .field input:focus { outline: none; border-color: var(--navy); }
+
+  .jenis-toggle { display: flex; gap: 8px; }
+  .jenis-btn {
+    flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper-card);
+    font-family: 'Public Sans', sans-serif; font-weight: 600; font-size: 13.5px; color: var(--ink); cursor: pointer; text-align: center;
+  }
+  .jenis-btn.active { background: #E4EEFB; border-color: var(--navy); color: var(--navy); }
+
+  .submit-btn {
+    width: 100%; padding: 14px; margin-top: 8px; background: var(--gold); color: var(--navy-deep);
+    border: none; border-radius: 10px; font-family: 'Public Sans', sans-serif; font-weight: 700; font-size: 14.5px;
+    cursor: pointer; transition: background 0.15s ease;
+  }
+  .submit-btn:hover:not(:disabled) { background: #D6910F; }
+  .submit-btn:disabled { background: #EFEAE0; color: var(--ink-soft); cursor: default; }
+
+  .loading-state { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 13.5px; }
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Direktorat SMA · Kemendikdasmen</div>
+  <h1>Pengisian Mandiri — Supervisi Pemanfaatan BOSP Kinerja Terbaik</h1>
+  <div class="goldline"></div>
+  <p>Cari daerah dan identitas Anda untuk mulai mengisi. Berlaku untuk seluruh sekolah, Fasilitator Daerah, dan Fasilitator Nasional penerima BOSP Kinerja Terbaik secara nasional.</p>
+</header>
+
+<main>
+  <div class="card">
+    <div class="role-toggle">
+      <button class="role-btn active" id="roleSekolah">Saya Sekolah</button>
+      <button class="role-btn" id="roleFasda">Saya Fasda / Fasnas</button>
+    </div>
+
+    <div id="formArea"><div class="loading-state">Memuat daftar sekolah...</div></div>
+  </div>
+</main>
+
+<footer>Direktorat SMA, Kemendikdasmen &mdash; Supervisi BOSP Kinerja Terbaik 2026</footer>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbwH15DkjOR3dI6etG7aAWMP_r9bPCLSI5o94jmJKlf1BB5b1uYqUOspNNI_gfpEAA7fgw/exec';
+  const DASHBOARD_BASE = window.location.origin;
+
+  let sekolahData = [];
+  let role = 'sekolah'; // 'sekolah' | 'fasda'
+  let jenisFasda = 'Fasda'; // 'Fasda' | 'Fasnas'
+
+  function uniqueSorted(arr) {
+    return [...new Set(arr)].sort((a, b) => a.localeCompare(b, 'id'));
+  }
+
+  function renderFormArea() {
+    const area = document.getElementById('formArea');
+    const provinsiList = uniqueSorted(sekolahData.map(s => s.provinsi));
+
+    if (role === 'sekolah') {
+      area.innerHTML = `
+        <div class="field">
+          <label>Provinsi</label>
+          <select id="selProvinsi"><option value="">Pilih provinsi...</option>${provinsiList.map(p => `<option value="${p}">${p}</option>`).join('')}</select>
+        </div>
+        <div class="field">
+          <label>Kabupaten/Kota</label>
+          <select id="selKabKota" disabled><option value="">Pilih provinsi dulu...</option></select>
+        </div>
+        <div class="field">
+          <label>Nama Sekolah</label>
+          <select id="selSekolah" disabled><option value="">Pilih kab/kota dulu...</option></select>
+        </div>
+        <button class="submit-btn" id="submitBtn" disabled>Mulai Isi Kuesioner</button>
+      `;
+      wireSekolahFlow();
+    } else {
+      area.innerHTML = `
+        <div class="field">
+          <label>Provinsi</label>
+          <select id="selProvinsi"><option value="">Pilih provinsi...</option>${provinsiList.map(p => `<option value="${p}">${p}</option>`).join('')}</select>
+        </div>
+        <div class="field">
+          <label>Kabupaten/Kota</label>
+          <select id="selKabKota" disabled><option value="">Pilih provinsi dulu...</option></select>
+        </div>
+        <div class="field">
+          <label>Jenis</label>
+          <div class="jenis-toggle">
+            <button type="button" class="jenis-btn active" id="jenisFasdaBtn">Fasilitator Daerah</button>
+            <button type="button" class="jenis-btn" id="jenisFasnasBtn">Fasilitator Nasional</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Nama Lengkap</label>
+          <input type="text" id="inputNama" placeholder="Nama sesuai surat tugas">
+        </div>
+        <button class="submit-btn" id="submitBtn" disabled>Mulai Wawancara</button>
+      `;
+      wireFasdaFlow();
+    }
+  }
+
+  function wireSekolahFlow() {
+    const selProvinsi = document.getElementById('selProvinsi');
+    const selKabKota = document.getElementById('selKabKota');
+    const selSekolah = document.getElementById('selSekolah');
+    const submitBtn = document.getElementById('submitBtn');
+
+    selProvinsi.addEventListener('change', () => {
+      const prov = selProvinsi.value;
+      const kabkotaList = uniqueSorted(sekolahData.filter(s => s.provinsi === prov).map(s => s.kabkota));
+      selKabKota.innerHTML = `<option value="">Pilih kab/kota...</option>${kabkotaList.map(k => `<option value="${k}">${k}</option>`).join('')}`;
+      selKabKota.disabled = !prov;
+      selSekolah.innerHTML = '<option value="">Pilih kab/kota dulu...</option>';
+      selSekolah.disabled = true;
+      submitBtn.disabled = true;
+    });
+
+    selKabKota.addEventListener('change', () => {
+      const prov = selProvinsi.value, kab = selKabKota.value;
+      const sekolahList = sekolahData.filter(s => s.provinsi === prov && s.kabkota === kab).sort((a, b) => a.nama.localeCompare(b.nama, 'id'));
+      selSekolah.innerHTML = `<option value="">Pilih sekolah...</option>${sekolahList.map(s => `<option value="${s.nama}">${s.nama}</option>`).join('')}`;
+      selSekolah.disabled = !kab;
+      submitBtn.disabled = true;
+    });
+
+    selSekolah.addEventListener('change', () => { submitBtn.disabled = !selSekolah.value; });
+
+    submitBtn.addEventListener('click', () => {
+      const url = `${DASHBOARD_BASE}/satdik.html?sekolah=${encodeURIComponent(selSekolah.value)}&kabkota=${encodeURIComponent(selKabKota.value)}&provinsi=${encodeURIComponent(selProvinsi.value)}&asal=${encodeURIComponent('Nasional')}`;
+      window.location.href = url;
+    });
+  }
+
+  function wireFasdaFlow() {
+    const selProvinsi = document.getElementById('selProvinsi');
+    const selKabKota = document.getElementById('selKabKota');
+    const jenisFasdaBtn = document.getElementById('jenisFasdaBtn');
+    const jenisFasnasBtn = document.getElementById('jenisFasnasBtn');
+    const inputNama = document.getElementById('inputNama');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function checkValid() {
+      submitBtn.disabled = !(selProvinsi.value && selKabKota.value && inputNama.value.trim());
+    }
+
+    selProvinsi.addEventListener('change', () => {
+      const prov = selProvinsi.value;
+      const kabkotaList = uniqueSorted(sekolahData.filter(s => s.provinsi === prov).map(s => s.kabkota));
+      selKabKota.innerHTML = `<option value="">Pilih kab/kota...</option>${kabkotaList.map(k => `<option value="${k}">${k}</option>`).join('')}`;
+      selKabKota.disabled = !prov;
+      checkValid();
+    });
+    selKabKota.addEventListener('change', checkValid);
+    inputNama.addEventListener('input', checkValid);
+
+    jenisFasdaBtn.addEventListener('click', () => { jenisFasda = 'Fasda'; jenisFasdaBtn.classList.add('active'); jenisFasnasBtn.classList.remove('active'); });
+    jenisFasnasBtn.addEventListener('click', () => { jenisFasda = 'Fasnas'; jenisFasnasBtn.classList.add('active'); jenisFasdaBtn.classList.remove('active'); });
+
+    submitBtn.addEventListener('click', () => {
+      const url = `${DASHBOARD_BASE}/wawancara.html?instrumen=${jenisFasda}&kabkota=${encodeURIComponent(selKabKota.value)}&nama=${encodeURIComponent(inputNama.value.trim())}&asal=${encodeURIComponent('Nasional')}`;
+      window.location.href = url;
+    });
+  }
+
+  document.getElementById('roleSekolah').addEventListener('click', () => {
+    role = 'sekolah';
+    document.getElementById('roleSekolah').classList.add('active');
+    document.getElementById('roleFasda').classList.remove('active');
+    renderFormArea();
+  });
+  document.getElementById('roleFasda').addEventListener('click', () => {
+    role = 'fasda';
+    document.getElementById('roleFasda').classList.add('active');
+    document.getElementById('roleSekolah').classList.remove('active');
+    renderFormArea();
+  });
+
+  async function init() {
+    try {
+      const res = await fetch(`${API_URL}?action=bank-sekolah-data`);
+      const data = await res.json();
+      if (data.error) {
+        document.getElementById('formArea').innerHTML = `<div class="loading-state">${data.error}</div>`;
+        return;
+      }
+      sekolahData = data.sekolah;
+      renderFormArea();
+    } catch (err) {
+      document.getElementById('formArea').innerHTML = '<div class="loading-state">Gagal memuat daftar sekolah. Coba muat ulang halaman.</div>';
+      console.error(err);
+    }
+  }
+
+  init();
+</script>
+
+</body>
+</html>
