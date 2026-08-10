@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wawancara, Supervisi BOSP Kinerja 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3E6F; --navy-deep: #122A4D; --gold: #E8A020;
+    --paper: #FAF7F1; --paper-card: #FFFFFF; --ink: #22262E; --ink-soft: #5B6270;
+    --line: #E4DFD3; --green: #2E7D5B; --red: #B84C3E;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Public Sans', sans-serif; height: 100vh; overflow: hidden; }
+  h1, h2, .brand { font-family: 'Fraunces', serif; }
+  .layout { display: flex; height: 100vh; }
+
+  aside { width: 320px; flex-shrink: 0; background: var(--navy); color: white; display: flex; flex-direction: column; height: 100vh; }
+  aside .brand-block { padding: 18px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+  aside .brand { font-size: 17px; font-weight: 600; margin: 0 0 2px; }
+  aside .brand-sub { font-size: 12px; color: rgba(255,255,255,0.65); }
+  aside .brand-asal { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gold); background: rgba(232,160,32,0.15); display: inline-block; padding: 3px 9px; border-radius: 20px; margin-top: 6px; }
+  .nav-scroll { flex: 1; overflow-y: auto; padding: 10px 0 18px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 18px; cursor: pointer; font-size: 13.5px; color: rgba(255,255,255,0.85); border-left: 3px solid transparent; }
+  .nav-item:hover { background: rgba(255,255,255,0.06); }
+  .nav-item.active { background: rgba(255,255,255,0.12); border-left-color: var(--gold); color: white; font-weight: 600; }
+  .nav-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; background: rgba(255,255,255,0.25); }
+  .nav-dot.filled { background: var(--gold); }
+  .nav-item .kode { font-variant-numeric: tabular-nums; opacity: 0.7; flex-shrink: 0; width: 22px; }
+  .nav-item .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  main { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  .topbar { padding: 16px 32px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--paper-card); }
+  .topbar .kabkota-label { font-size: 13px; color: var(--ink-soft); }
+  .topbar .kabkota-label strong { color: var(--ink); }
+  .status-badge { font-size: 12.5px; font-weight: 600; padding: 5px 12px; border-radius: 20px; }
+  .status-badge.saved { background: #E9F3EC; color: var(--green); }
+  .status-badge.saving { background: #FBEBD8; color: #A5651A; }
+  .status-badge.error { background: #FBE9E6; color: var(--red); }
+  .status-badge.idle { background: #EFEAE0; color: var(--ink-soft); }
+
+  .content { flex: 1; overflow-y: auto; padding: 32px 48px; max-width: 760px; }
+  .item-kode { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+  .item-title { font-size: 20px; font-weight: 600; line-height: 1.35; margin: 0 0 8px; color: var(--navy-deep); }
+  .item-pendalaman { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; background: #F3EEE3; border-left: 3px solid var(--gold); padding: 12px 16px; border-radius: 0 8px 8px 0; margin-bottom: 24px; }
+
+  .block { margin-bottom: 26px; }
+  .block-label { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+  .opt-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; cursor: pointer; }
+  .opt-row input { margin-top: 3px; accent-color: var(--navy); width: 16px; height: 16px; flex-shrink: 0; }
+  .opt-row label { font-size: 14px; line-height: 1.4; cursor: pointer; }
+  .lainnya-input {
+    width: 100%; margin-top: 6px; padding: 8px 12px; border: 1px solid var(--line);
+    border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 13.5px;
+  }
+  .lainnya-input:focus { outline: none; border-color: var(--navy); }
+
+  .identitas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px; }
+  .identitas-field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+  .identitas-field input, .identitas-field select { width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; font-family: 'Public Sans', sans-serif; font-size: 14px; }
+  .identitas-field input:focus, .identitas-field select:focus { outline: none; border-color: var(--navy); }
+
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; padding-bottom: 40px; }
+  .nav-buttons button { background: var(--paper-card); border: 1px solid var(--line); color: var(--navy); font-family: 'Public Sans', sans-serif; font-weight: 600; font-size: 13.5px; padding: 9px 18px; border-radius: 8px; cursor: pointer; }
+  .nav-buttons button:hover { border-color: var(--navy); }
+  .nav-buttons button:disabled { opacity: 0.4; cursor: default; }
+
+  .loading-state { text-align: center; padding: 80px 20px; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbwH15DkjOR3dI6etG7aAWMP_r9bPCLSI5o94jmJKlf1BB5b1uYqUOspNNI_gfpEAA7fgw/exec';
+
+  const params = new URLSearchParams(window.location.search);
+  const kabkota = params.get('kabkota');
+  const asal = params.get('asal') || 'Tidak diketahui';
+  const namaAwal = params.get('nama') || '';
+  const instrumen = params.get('instrumen') === 'Fasnas' ? 'Fasnas' : 'Fasda';
+
+  const IDENTITAS_FIELDS = [
+    { kode: 'identitas:nama', label: 'Nama Lengkap', tipe: 'text', nilaiAwal: namaAwal },
+    { kode: 'identitas:jabatan', label: 'Jabatan', tipe: 'text' },
+    { kode: 'identitas:instansi', label: 'Asal Instansi', tipe: 'text' },
+    { kode: 'identitas:nohp', label: 'Nomor HP', tipe: 'text' },
+    { kode: 'identitas:unsur', label: 'Unsur', tipe: 'select', opsi: ['SPMI', 'Litnum', 'Litnum PAUD', 'Digitalisasi'] }
+  ];
+
+  // Sesi dikunci dengan nama yang dipakai untuk MEMUAT data (namaAwal dari
+  // URL). Kalau field "Nama Lengkap" diedit di panel Identitas, itu cuma
+  // mengubah data yang tersimpan, bukan pindah sesi, supaya tidak
+  // membingungkan tiap kali halaman dibuka ulang dengan link yang sama.
+  const namaSesi = namaAwal;
+
+  let state = { pertanyaan: [], jawaban: {}, activeNo: 'identitas', saveTimers: {} };
+
+  async function init() {
+    if (!kabkota) {
+      document.getElementById('app').innerHTML = '<div class="loading-state">Link tidak lengkap, perlu parameter kabkota di URL.</div>';
+      return;
+    }
+    document.getElementById('app').innerHTML = '<div class="loading-state">Memuat instrumen...</div>';
+    try {
+      const res = await fetch(`${API_URL}?action=wawancara-data&instrumen=${instrumen}&kabkota=${encodeURIComponent(kabkota)}&nama=${encodeURIComponent(namaSesi)}`);
+      const data = await res.json();
+      if (data.error) {
+        document.getElementById('app').innerHTML = `<div class="loading-state">${data.error}</div>`;
+        return;
+      }
+      state.pertanyaan = data.pertanyaan;
+      state.jawaban = data.jawaban || {};
+      renderApp();
+    } catch (err) {
+      document.getElementById('app').innerHTML = '<div class="loading-state">Gagal memuat data. Coba muat ulang halaman.</div>';
+      console.error(err);
+    }
+  }
+
+  function kodeBlok(no, kelompok) {
+    return no + '|' + (kelompok || '');
+  }
+
+  function blokTerisi(no) {
+    const item = state.pertanyaan.find(p => p.no === no);
+    return item.blocks.some(b => {
+      const v = state.jawaban[kodeBlok(no, b.kelompok)];
+      return v && v.trim().length > 0;
+    });
+  }
+
+  function identitasTerisi() {
+    return IDENTITAS_FIELDS.some(f => state.jawaban[f.kode] && state.jawaban[f.kode].trim().length > 0) || !!namaAwal;
+  }
+
+  function renderApp() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+      <div class="layout">
+        <aside>
+          <div class="brand-block">
+            <div class="brand">Wawancara ${instrumen}</div>
+            <div class="brand-sub">${namaSesi ? namaSesi + ' &middot; ' + kabkota : kabkota}</div>
+            <div class="brand-asal">${asal}</div>
+          </div>
+          <div class="nav-scroll" id="navScroll"></div>
+        </aside>
+        <main>
+          <div class="topbar">
+            <div class="kabkota-label">Lokus: <strong>${kabkota}</strong> &middot; ${instrumen}</div>
+            <div class="status-badge idle" id="statusBadge">Siap</div>
+          </div>
+          <div class="content" id="mainContent"></div>
+        </main>
+      </div>
+    `;
+    renderNav();
+    renderDetail();
+  }
+
+  function renderNav() {
+    const nav = document.getElementById('navScroll');
+    let html = `<div class="nav-section-title">Identitas</div>
+      <div class="nav-item ${state.activeNo === 'identitas' ? 'active' : ''}" data-no="identitas">
+        <span class="nav-dot ${identitasTerisi() ? 'filled' : ''}"></span>
+        <span class="label">Identitas Narasumber</span>
+      </div>`;
+    html += state.pertanyaan.map(p => {
+      const filled = blokTerisi(p.no);
+      const active = p.no === state.activeNo;
+      return `
+        <div class="nav-item ${active ? 'active' : ''}" data-no="${p.no}">
+          <span class="nav-dot ${filled ? 'filled' : ''}"></span>
+          <span class="kode">${p.no}</span>
+          <span class="label">${p.pertanyaan}</span>
+        </div>
+      `;
+    }).join('');
+    nav.innerHTML = html;
+    nav.querySelectorAll('.nav-item').forEach(el => {
+      el.addEventListener('click', () => {
+        state.activeNo = el.dataset.no === 'identitas' ? 'identitas' : Number(el.dataset.no);
+        renderNav();
+        renderDetail();
+      });
+    });
+  }
+
+  function renderDetail() {
+    const content = document.getElementById('mainContent');
+    if (state.activeNo === 'identitas') { renderIdentitas(content); return; }
+
+    const item = state.pertanyaan.find(p => p.no === state.activeNo);
+    if (!item) { content.innerHTML = ''; return; }
+
+    const idx = state.pertanyaan.indexOf(item);
+    const prev = idx === 0 ? { no: 'identitas', label: 'Identitas' } : state.pertanyaan[idx - 1];
+    const next = state.pertanyaan[idx + 1];
+
+    const blocksHtml = item.blocks.map((b, bi) => {
+      const kode = kodeBlok(item.no, b.kelompok);
+      const savedRaw = state.jawaban[kode] || '';
+      const savedSet = new Set(savedRaw.split('\n').filter(Boolean));
+      let savedLainnyaText = '';
+      // deteksi teks "Lainnya" tersimpan (tidak match opsi manapun)
+      savedSet.forEach(v => { if (b.opsi.indexOf(v) === -1) savedLainnyaText = v; });
+
+      const optsHtml = b.opsi.map((opt, oi) => `
+        <div class="opt-row" data-block="${bi}">
+          <input type="${b.tipe === 'PILIHAN_TUNGGAL' ? 'radio' : 'checkbox'}"
+                 name="blok-${bi}" id="opt-${bi}-${oi}" value="${opt.replace(/"/g, '&quot;')}"
+                 ${savedSet.has(opt) ? 'checked' : ''}>
+          <label for="opt-${bi}-${oi}">${opt}</label>
+        </div>
+      `).join('');
+
+      const lainnyaHtml = b.lainnya ? `
+        <input type="text" class="lainnya-input" data-block="${bi}" placeholder="Lainnya, sebutkan..." value="${savedLainnyaText.replace(/"/g, '&quot;')}">
+      ` : '';
+
+      return `
+        <div class="block" data-kode="${kode}">
+          ${b.kelompok ? `<div class="block-label">${b.kelompok}</div>` : ''}
+          ${optsHtml}
+          ${lainnyaHtml}
+        </div>
+      `;
+    }).join('');
+
+    content.innerHTML = `
+      <div class="item-kode">No ${item.no} &middot; ${item.section}</div>
+      <h2 class="item-title">${item.pertanyaan}</h2>
+      ${item.pendalaman ? `<div class="item-pendalaman">${item.pendalaman}</div>` : ''}
+      ${blocksHtml}
+      <div class="nav-buttons">
+        <button id="btnPrev">&larr; ${prev.no === 'identitas' ? 'Identitas' : 'No ' + prev.no}</button>
+        <button id="btnNext" ${!next ? 'disabled' : ''}>${next ? 'No ' + next.no : ''} &rarr;</button>
+      </div>
+    `;
+
+    item.blocks.forEach((b, bi) => {
+      const kode = kodeBlok(item.no, b.kelompok);
+      const blockEl = content.querySelector(`.block[data-kode="${CSS.escape(kode)}"]`);
+      const collectAndSave = () => {
+        const checked = Array.from(blockEl.querySelectorAll('input[type=checkbox]:checked, input[type=radio]:checked')).map(i => i.value);
+        const lainnyaEl = blockEl.querySelector('.lainnya-input');
+        if (lainnyaEl && lainnyaEl.value.trim()) checked.push(lainnyaEl.value.trim());
+        const jawaban = checked.join('\n');
+        state.jawaban[kode] = jawaban;
+        scheduleSave(kode, jawaban);
+      };
+      blockEl.querySelectorAll('input[type=checkbox], input[type=radio]').forEach(el => el.addEventListener('change', collectAndSave));
+      const lainnyaEl = blockEl.querySelector('.lainnya-input');
+      if (lainnyaEl) lainnyaEl.addEventListener('input', collectAndSave);
+    });
+
+    document.getElementById('btnPrev').addEventListener('click', () => { state.activeNo = prev.no; renderNav(); renderDetail(); });
+    if (next) document.getElementById('btnNext').addEventListener('click', () => { state.activeNo = next.no; renderNav(); renderDetail(); });
+  }
+
+  function renderIdentitas(content) {
+    const first = state.pertanyaan[0];
+    content.innerHTML = `
+      <div class="item-kode">IDENTITAS</div>
+      <h2 class="item-title">Identitas Narasumber</h2>
+      <div class="item-pendalaman">Diisi satu kali per orang. Kalau di satu kab/kota ada beberapa Fasda atau Fasnas yang hadir, masing-masing mengisi lewat link/sesinya sendiri, bukan menimpa punya yang lain.</div>
+      <div class="identitas-grid">
+        ${IDENTITAS_FIELDS.map(f => `
+          <div class="identitas-field">
+            <label>${f.label}</label>
+            ${f.tipe === 'select'
+              ? `<select data-idkode="${f.kode}"><option value="">Pilih...</option>${f.opsi.map(o => `<option value="${o}" ${state.jawaban[f.kode] === o ? 'selected' : ''}>${o}</option>`).join('')}</select>`
+              : `<input type="text" data-idkode="${f.kode}" value="${(state.jawaban[f.kode] || f.nilaiAwal || '').replace(/"/g, '&quot;')}">`
+            }
+          </div>
+        `).join('')}
+      </div>
+      <div class="nav-buttons">
+        <button disabled>&larr;</button>
+        <button id="btnNext">${first ? 'No ' + first.no : ''} &rarr;</button>
+      </div>
+    `;
+    content.querySelectorAll('[data-idkode]').forEach(el => {
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+        const kode = el.dataset.idkode;
+        state.jawaban[kode] = el.value;
+        scheduleSave(kode, el.value);
+      });
+    });
+    if (first) document.getElementById('btnNext').addEventListener('click', () => { state.activeNo = first.no; renderNav(); renderDetail(); });
+  }
+
+  function scheduleSave(kode, jawaban) {
+    setStatus('saving');
+    clearTimeout(state.saveTimers[kode]);
+    state.saveTimers[kode] = setTimeout(() => saveJawaban(kode, jawaban), 900);
+  }
+
+  async function saveJawaban(kode, jawaban) {
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'save-wawancara-jawaban', instrumen: instrumen, kabkota: kabkota, kode: kode, jawaban: jawaban, asal: asal, nama: nama })
+      });
+      const data = await res.json();
+      setStatus(data.ok ? 'saved' : 'error');
+      renderNav();
+    } catch (err) {
+      setStatus('error');
+      console.error(err);
+    }
+  }
+
+  function setStatus(kind) {
+    const badge = document.getElementById('statusBadge');
+    if (!badge) return;
+    const labels = { saving: 'Menyimpan...', saved: 'Tersimpan', error: 'Gagal menyimpan, coba lagi', idle: 'Siap' };
+    badge.className = 'status-badge ' + kind;
+    badge.textContent = labels[kind];
+  }
+
+  init();
+</script>
+
+</body>
+</html>
