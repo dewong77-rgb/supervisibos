@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supervisi Pemanfaatan BOSP Kinerja Terbaik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3E6F; --navy-deep: #122A4D; --gold: #E8A020; --gold-soft: #F3C468;
+    --paper: #FAF7F1; --paper-card: #FFFFFF; --ink: #22262E; --ink-soft: #5B6270;
+    --line: #E4DFD3; --green: #2E7D5B; --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Public Sans', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  h1, h2, .brand { font-family: 'Fraunces', serif; }
+
+  header { background: var(--navy); background-image: radial-gradient(circle at 85% -20%, rgba(232,160,32,0.18), transparent 55%); color: white; padding: 48px 24px 40px; text-align: center; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-soft); font-weight: 600; margin-bottom: 12px; }
+  header h1 { font-size: clamp(26px, 4.2vw, 38px); font-weight: 600; margin: 0 auto 10px; max-width: 620px; line-height: 1.2; }
+  header p { margin: 0 auto; color: rgba(255,255,255,0.75); font-size: 14.5px; max-width: 460px; }
+  .goldline { width: 64px; height: 3px; background: var(--gold); border-radius: 3px; margin: 18px auto; }
+
+  main { max-width: 880px; margin: -28px auto 60px; padding: 0 20px; }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+
+  .menu-card {
+    background: var(--paper-card); border-radius: var(--radius); border: 1px solid var(--line);
+    padding: 26px 24px; text-decoration: none; color: var(--ink); display: block;
+    box-shadow: 0 8px 24px rgba(18,42,77,0.06); transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .menu-card:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(18,42,77,0.12); }
+
+  .menu-icon {
+    width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin-bottom: 16px;
+  }
+  .menu-card.tone-navy .menu-icon { background: #E4EEFB; color: var(--navy); }
+  .menu-card.tone-gold .menu-icon { background: #FBEBD8; color: #A5651A; }
+  .menu-card.tone-green .menu-icon { background: #E9F3EC; color: var(--green); }
+  .menu-card.tone-purple .menu-icon { background: #F5E9F0; color: #A13E76; }
+
+  .menu-badge {
+    display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    background: var(--gold); color: var(--navy-deep); padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .menu-title { font-size: 17px; font-weight: 600; margin: 0 0 6px; color: var(--navy-deep); }
+  .menu-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Direktorat SMA · Kemendikdasmen</div>
+  <h1>Supervisi Pemanfaatan BOSP Kinerja Terbaik</h1>
+  <div class="goldline"></div>
+  <p>Satu tempat untuk kegiatan supervisi, pengisian mandiri nasional, dan hasil analisis.</p>
+</header>
+
+<main>
+  <div class="menu-grid" id="menuGrid"></div>
+</main>
+
+<footer>Direktorat SMA, Kemendikdasmen. Supervisi BOSP Kinerja Terbaik 2026</footer>
+
+<script>
+  // ------------------------------------------------------------------
+  // Menu tampil/sembunyi diatur dari server (lewat pengaturan.html),
+  // bukan lagi kode tetap di sini -- supaya bisa diubah kapan saja tanpa
+  // perlu edit file ini atau redeploy.
+  // ------------------------------------------------------------------
+  const API_URL = 'https://script.google.com/macros/s/AKfycbwH15DkjOR3dI6etG7aAWMP_r9bPCLSI5o94jmJKlf1BB5b1uYqUOspNNI_gfpEAA7fgw/exec';
+
+  const MENU_ITEMS = [
+    {
+      key: 'supervisi',
+      tone: 'gold',
+      icon: '&#128203;',
+      badge: '10 sampai 15 Agustus 2026',
+      title: 'Kegiatan Supervisi',
+      desc: 'Link pengisian dan status progres untuk tim yang bertugas di lapangan.',
+      href: 'supervisi.html'
+    },
+    {
+      key: 'observasiSekolah',
+      tone: 'navy',
+      icon: '&#127979;',
+      badge: 'Nasional',
+      title: 'Kuesioner Observasi Sekolah',
+      desc: 'Untuk sekolah penerima BOSP Kinerja Terbaik di seluruh Indonesia. Cari sekolah Anda dan mulai mengisi.',
+      href: 'nasional.html?peran=sekolah'
+    },
+    {
+      key: 'fasdaFasnas',
+      tone: 'green',
+      icon: '&#128100;',
+      badge: 'Nasional',
+      title: 'Wawancara Fasda / Fasnas',
+      desc: 'Untuk Fasilitator Daerah dan Fasilitator Nasional. Cari daerah Anda dan mulai wawancara.',
+      href: 'nasional.html?peran=fasda'
+    },
+    {
+      key: 'panduanSupervisi',
+      tone: 'gold',
+      icon: '&#128218;',
+      badge: 'Panduan',
+      title: 'Panduan Kegiatan Supervisi',
+      desc: 'Cara memakai alat ini untuk petugas yang bertugas di lapangan.',
+      href: 'panduan-supervisi.html'
+    },
+    {
+      key: 'panduanNasional',
+      tone: 'green',
+      icon: '&#128218;',
+      badge: 'Panduan',
+      title: 'Panduan Pengisian Mandiri',
+      desc: 'Cara memakai alat ini untuk sekolah, Fasda, dan Fasnas di seluruh Indonesia.',
+      href: 'panduan-nasional.html'
+    },
+    {
+      key: 'analisis',
+      tone: 'purple',
+      icon: '&#128202;',
+      badge: 'Internal',
+      title: 'Hasil Analisis',
+      desc: 'Ringkasan hasil isian dan tautan ke berkas sumber. Khusus Tim Data/pimpinan.',
+      href: 'analisis.html'
+    }
+  ];
+
+  async function renderMenu() {
+    const grid = document.getElementById('menuGrid');
+    grid.innerHTML = '<p style="text-align:center;color:var(--ink-soft);grid-column:1/-1;">Memuat menu...</p>';
+    let config;
+    try {
+      const res = await fetch(`${API_URL}?action=menu-config`);
+      config = await res.json();
+    } catch (err) {
+      // Kalau server tidak terjangkau, tampilkan semua kecuali Analisis
+      // sebagai jaga-jaga supaya halaman tetap berguna.
+      config = { supervisi: true, observasiSekolah: true, fasdaFasnas: true, analisis: false, panduanSupervisi: true, panduanNasional: true };
+    }
+    grid.innerHTML = MENU_ITEMS
+      .filter(item => config[item.key])
+      .map(item => `
+        <a class="menu-card tone-${item.tone}" href="${item.href}">
+          <div class="menu-icon">${item.icon}</div>
+          <div class="menu-badge">${item.badge}</div>
+          <div class="menu-title">${item.title}</div>
+          <p class="menu-desc">${item.desc}</p>
+        </a>
+      `).join('');
+  }
+
+  renderMenu();
+</script>
+
+</body>
+</html>
