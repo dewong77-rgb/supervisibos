@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengaturan, Supervisi BOSP Kinerja Terbaik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A3E6F; --navy-deep: #122A4D; --gold: #E8A020; --gold-soft: #F3C468;
+    --paper: #FAF7F1; --paper-card: #FFFFFF; --ink: #22262E; --ink-soft: #5B6270;
+    --line: #E4DFD3; --green: #2E7D5B; --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'Public Sans', sans-serif; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  h1, h2 { font-family: 'Fraunces', serif; }
+
+  header { background: var(--navy); color: white; padding: 32px 24px 26px; }
+  .header-inner { max-width: 640px; margin: 0 auto; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-soft); font-weight: 600; margin-bottom: 8px; }
+  header h1 { font-size: 22px; font-weight: 600; margin: 0 0 6px; }
+  header p { margin: 0; color: rgba(255,255,255,0.7); font-size: 13px; }
+  .goldline { width: 56px; height: 3px; background: var(--gold); border-radius: 3px; margin: 14px 0 0; }
+
+  main { max-width: 640px; margin: 0 auto; padding: 28px 24px 60px; }
+
+  .warn-box {
+    background: #FBE9E6; border: 1px solid #E8B4AC; border-radius: 10px; padding: 14px 16px;
+    font-size: 13px; color: #8A3A2E; margin-bottom: 24px; line-height: 1.5;
+  }
+
+  .card { background: var(--paper-card); border-radius: var(--radius); border: 1px solid var(--line); padding: 8px 22px; }
+
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-label { font-size: 14.5px; font-weight: 600; }
+  .toggle-sub { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  .switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch-track {
+    position: absolute; cursor: pointer; inset: 0; background: #D8D2C4; border-radius: 24px; transition: 0.2s;
+  }
+  .switch-track::before {
+    content: ""; position: absolute; height: 18px; width: 18px; left: 3px; bottom: 3px;
+    background: white; border-radius: 50%; transition: 0.2s;
+  }
+  .switch input:checked + .switch-track { background: var(--green); }
+  .switch input:checked + .switch-track::before { transform: translateX(20px); }
+
+  .status-line { text-align: center; font-size: 13px; color: var(--ink-soft); margin-top: 16px; min-height: 18px; }
+  .status-line.saved { color: var(--green); font-weight: 600; }
+
+  footer { text-align: center; font-size: 12px; color: var(--ink-soft); padding: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">Direktorat SMA, Kemendikdasmen. Pengaturan</div>
+    <h1>Pengaturan Menu Halaman Muka</h1>
+    <div class="goldline"></div>
+    <p>Atur menu apa saja yang tampil di halaman muka (index.html).</p>
+  </div>
+</header>
+
+<main>
+  <div class="warn-box">
+    Halaman ini tidak ditautkan dari mana pun di dalam aplikasi. Jangan bagikan alamatnya ke siapa pun selain yang memang perlu mengatur menu.
+  </div>
+
+  <div class="card" id="toggleList">
+    <p style="text-align:center;color:var(--ink-soft);padding:20px 0;">Memuat pengaturan...</p>
+  </div>
+
+  <div class="status-line" id="statusLine"></div>
+</main>
+
+<footer>Direktorat SMA, Kemendikdasmen. Supervisi BOSP Kinerja Terbaik 2026</footer>
+
+<script>
+  const API_URL = 'https://script.google.com/macros/s/AKfycbwH15DkjOR3dI6etG7aAWMP_r9bPCLSI5o94jmJKlf1BB5b1uYqUOspNNI_gfpEAA7fgw/exec';
+
+  const MENU_LABELS = [
+    { key: 'supervisi', label: 'Kegiatan Supervisi', sub: 'Dashboard link pengisian dan progres kegiatan 10 sampai 15 Agustus.' },
+    { key: 'fasdaFasnas', label: 'Kuesioner Nasional', sub: 'Pencarian mandiri gabungan: Sekolah, Fasilitator Daerah, dan Fasilitator Nasional se-Indonesia.' },
+    { key: 'panduanSupervisi', label: 'Panduan Kegiatan Supervisi', sub: 'Petunjuk pemakaian untuk petugas lapangan.' },
+    { key: 'panduanNasional', label: 'Panduan Pengisian Mandiri', sub: 'Petunjuk pemakaian untuk pengisian nasional.' },
+    { key: 'analisis', label: 'Hasil Analisis', sub: 'Sengaja default tersembunyi. Nyalakan hanya kalau memang mau dibuka ke publik.' },
+    { key: 'progresNasional', label: 'Progres Pengisian Nasional', sub: 'Sengaja default tersembunyi. Monitor sekolah dan Fasda/Fasnas yang sudah mengisi se-Indonesia, khusus Tim Data/pimpinan.' }
+  ];
+
+  let config = {};
+
+  function render() {
+    const list = document.getElementById('toggleList');
+    list.innerHTML = MENU_LABELS.map(item => `
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">${item.label}</div>
+          <div class="toggle-sub">${item.sub}</div>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-key="${item.key}" ${config[item.key] ? 'checked' : ''}>
+          <span class="switch-track"></span>
+        </label>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('input[type=checkbox]').forEach(el => {
+      el.addEventListener('change', () => {
+        config[el.dataset.key] = el.checked;
+        simpan();
+      });
+    });
+  }
+
+  async function muat() {
+    try {
+      const res = await fetch(`${API_URL}?action=menu-config`);
+      config = await res.json();
+      render();
+    } catch (err) {
+      document.getElementById('toggleList').innerHTML = '<p style="text-align:center;color:var(--ink-soft);padding:20px 0;">Gagal memuat pengaturan. Coba muat ulang halaman.</p>';
+    }
+  }
+
+  let simpanTimer = null;
+  function simpan() {
+    const status = document.getElementById('statusLine');
+    status.textContent = 'Menyimpan...';
+    status.className = 'status-line';
+    clearTimeout(simpanTimer);
+    simpanTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ action: 'save-menu-config', config: config })
+        });
+        const data = await res.json();
+        status.textContent = data.ok ? 'Tersimpan. Perubahan langsung berlaku di halaman muka.' : 'Gagal menyimpan, coba lagi.';
+        status.className = data.ok ? 'status-line saved' : 'status-line';
+      } catch (err) {
+        status.textContent = 'Gagal menyimpan, coba lagi.';
+      }
+    }, 400);
+  }
+
+  muat();
+</script>
+
+</body>
+</html>
